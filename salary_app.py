@@ -21,3 +21,7 @@ ax.set_ylabel('salary')
 st.pyplot(fig)
 
 "## Average Annual Salary by Category"
+categories = st.sidebar.selectbox('Select category: ', ('work_year', 'experience_level', 'company_size', 'employment_type', 'company_location', 'remote_ratio'))
+grouped = ds_salary_df_1.groupby(categories)['salary_in_usd'].mean().sort_values(ascending=False)
+st.write("Average Annual Salary by "+categories)
+st.bar_chart(grouped)
