@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
 st.sidebar.write(
     '''
@@ -10,8 +11,7 @@ st.sidebar.write(
 )
 
 # read from .csv file
-ds_salary_df = pd.read_csv('ds_salaries.csv')
-ds_salary_df_1 = ds_salary_df.drop(columns=['Unnamed: 0'])
+ds_salary_df_1 = pd.read_csv('ds_salaries_clean.csv')
 
 "## Annual Salary Boxplot"
 fig, ax = plt.subplots()
