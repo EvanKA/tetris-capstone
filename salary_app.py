@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-import plotly.express as px
 
 st.sidebar.write(
     '''
@@ -21,9 +20,10 @@ st.sidebar.write(
 '''
 # read from .csv file
 ds_salary_df_1 = pd.read_csv('ds_salaries_clean.csv')
+plt.rcParams.update({'font.size':5.5}) # change font size of the visualization
 "## Data Jobs Annual Salary Visualization in USD"
 fig, ax = plt.subplots(nrows=3, ncols=2)
-plt.suptitle("Annual Salary Visualizations in USD")
+fig.tight_layout(pad=3.0, w_pad=5.0, h_pad=5.0)
 ax[0][0].hist(ds_salary_df_1['salary_in_usd'])
 ax[0][0].set_title('Annual salary distribution (USD)')
 ax[0][0].set_xlabel('salary (USD)')
@@ -34,7 +34,24 @@ ax[0][1].set_title('Annual salary by year (USD)')
 ax[0][1].set_xlabel('year')
 ax[0][1].set_ylabel('salary (USD)')
 xp_salary = ds_salary_df_1.groupby('experience_level')['salary_in_usd'].mean()
+ax[1][0].bar(year_salary.index, year_salary)
+ax[1][0].set_title('Annual salary by experience level (USD)')
+ax[1][0].set_xlabel('experience level')
+ax[1][0].set_ylabel('salary (USD)')
 size_salary = ds_salary_df_1.groupby('company_size')['salary_in_usd'].mean()
+ax[1][1].bar(year_salary.index, year_salary)
+ax[1][1].set_title('Annual salary by company size (USD)')
+ax[1][1].set_xlabel('company size')
+ax[1][1].set_ylabel('salary (USD)')
 type_salary = ds_salary_df_1.groupby('employment_type')['salary_in_usd'].mean()
+ax[2][0].bar(year_salary.index, year_salary)
+ax[2][0].set_title('Annual salary by employment type (USD)')
+ax[2][0].set_xlabel('employment type')
+ax[2][0].set_ylabel('salary (USD)')
 wfa_salary = ds_salary_df_1.groupby('remote_ratio')['salary_in_usd'].mean()
-st.pyplot(fig)
+ax[2][1].bar(year_salary.index, year_salary)
+ax[2][1].set_title('Annual salary by remote ratio (USD)')
+ax[2][1].set_xlabel('remote ratio (0=WFO, 50=hybrid, 100=WFA)')
+ax[2][1].set_ylabel('salary (USD)')
+
+fig
